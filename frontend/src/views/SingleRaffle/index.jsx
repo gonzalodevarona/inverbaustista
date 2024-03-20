@@ -1,0 +1,120 @@
+import { useState, useEffect } from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Stack, Typography, } from "@mui/material";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
+import { useNavigate } from 'react-router-dom';
+import CONSTANTS from "../../utils/Constants";
+import Carousel from "../../components/Carousel";
+import ToastAlert from "../../components/Alerts/ToastAlert"
+import RaffleService from "../../services/RaffleService";
+import { calculateFinalPrice } from "../../utils/CommonFunctions";
+import TicketService from "../../services/TicketService";
+import { parseDateToString } from "../../utils/CommonFunctions";
+
+function SingleRaffle() {
+
+  dayjs.locale('es');
+
+  const navigate = useNavigate();
+
+  const handleRedirectClick = (route) => {
+    navigate('/' + route)
+  };
+
+
+  const [raffle, setRaffle] = useState({});
+  const [loading, setLoading] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+  const [disabled, setDisabled] = useState(false);
+  let { id } = useParams();
+
+
+
+  const getRaffle = async () => {
+    const res = await RaffleService.getRaffleById(id)
+
+    if (res.status === 400 || res.errorMessage || res.status !== 'ACTIVE') {
+      handleRedirectClick('404')
+    }
+    setRaffle(res);
+  }
+
+
+  useEffect(() => {
+
+    getRaffle();
+
+  }, []);
+
+
+
+
+
+  const handleClick = async (quantity) => {
+
+    if (await TicketService.checkTicketAvailability(raffle.id, quantity)) {
+      setLoading({ ...loading, [quantity]: true });
+      setDisabled(true);
+      handleRedirectClick(`info/${id}/${quantity}`)
+    } else {
+      ToastAlert('top-right', 4000).fire({
+        icon: 'error',
+        title: 'Error: no hay disponibles la cantidad de tickets que deseas comprar, intenta de nuevo con menos'
+      })
+    }
+
+  };
+
+  return (
+    <Stack spacing={{ xs: 5, md: 0 }} sx={[CONSTANTS.sxResponsiveFlex, CONSTANTS.styleStackContainer, { maxHeight: "100%" }]}>
+
+
+      <Stack>
+        {raffle.images && <Carousel images={raffle.images.map(item => item.url)} title={raffle.name} />}
+      </Stack>
+      <Stack sx={{ border: 'solid 1px', borderColor: 'primary', borderRadius: '8px' }} >
+
+        <Stack alignItems="center" padding='2em'>
+          {raffle.pricePerTicket &&
+            Array.from({ length: 5 }, (_, index) => (
+              <LoadingButton
+                fullWidth
+                onClick={() => handleClick(index + 1)}
+                variant='contained'
+                loading={loading[index + 1]}
+                disabled={disabled}
+                key={index}
+              >
+                Comprar {index + 1} ticket{index > 0 ? "s" : ""} x ${new Intl.NumberFormat('es-CO').format(calculateFinalPrice(index + 1, raffle.pricePerTicket, raffle.discount))}
+              </LoadingButton>
+            ))
+          }
+        </Stack>
+
+        <Stack padding='2em' sx={{ textAlign: "start" }} >
+          <Typography variant="subtitle1" >
+            Juega:
+            {raffle.drawDate && <Typography display={'inline'} > {parseDateToString(raffle.drawDate, false)}  </Typography>}
+          </Typography>
+
+          <Typography variant="subtitle1" >
+            Con:
+            <Typography display={'inline'} > {raffle.drawEvent}  </Typography>
+          </Typography>
+
+          <Typography variant="subtitle1" >
+            Descripción:
+            <Typography display={'inline'} > {raffle.description}  </Typography>
+          </Typography>
+        </Stack>
+
+
+
+      </Stack>
+
+    </Stack>
+
+  );
+}
+
+export default SingleRaffle
