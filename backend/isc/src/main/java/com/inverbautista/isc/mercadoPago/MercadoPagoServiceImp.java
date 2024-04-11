@@ -22,6 +22,7 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ import java.util.Map;
 @Service
 public class MercadoPagoServiceImp implements IMercadoPagoService{
 
-
+    @Value("${mercadopago.accessToken}")
+    private String accessToken;
     private IPayerService payerService;
     private IItemService itemService;
     private IClientService clientService;
@@ -52,7 +54,8 @@ public class MercadoPagoServiceImp implements IMercadoPagoService{
     @Override
     public MercadoPagoResponseDto generatePreference(MercadoPagoRequestDto mercadoPagoRequestDto){
             try {
-                MercadoPagoConfig.setAccessToken("TEST-5106859226327131-021411-21f66cdac45e468b2e698ffa24ce5261-155342553");
+
+                MercadoPagoConfig.setAccessToken(accessToken);
 
                 // Payment restrictions
 
@@ -87,7 +90,7 @@ public class MercadoPagoServiceImp implements IMercadoPagoService{
                         .payer(payer)
                         .paymentMethods(paymentMethods)
                         .backUrls(backUrls)
-                        .notificationUrl("https://bbd1-181-204-190-211.ngrok-free.app/api/pay/notify")
+                        .notificationUrl("https://3ebe-2803-1800-1342-f5ad-e992-8df1-6cf-ab8a.ngrok-free.app/api/pay/notify")
                         .metadata(new HashMap<>() {{
                             put("email", payer.getEmail());
                             put("idNumber", payer.getIdentification().getNumber());

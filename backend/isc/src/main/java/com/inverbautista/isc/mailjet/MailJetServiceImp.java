@@ -9,25 +9,31 @@ import com.mailjet.client.resource.Emailv31;
 import com.mercadopago.resources.payment.Payment;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
-import java.util.Map;
 
 @Service
 public class MailJetServiceImp implements IMailJetService{
+    @Value("${mailjet.apiKey}")
+    private String apiKey;
+    @Value("${mailjet.apiSecret}")
+    private String apiSecret;
+    @Value("${mailjet.senderEmail}")
+    private String senderEmail;
 
     public void sendSuccessfulPurchaseEmail(MailDataDto mailDataDto) {
         try {
             MailjetClient client;
             MailjetRequest request;
             MailjetResponse response;
-            client = new MailjetClient("ec500379cf77e174bc280128b387b4de", "5e5556b542b025ee36a81b02e6aca5a4", new ClientOptions("v3.1"));
+            client = new MailjetClient(apiKey, apiSecret, new ClientOptions("v3.1"));
             request = new MailjetRequest(Emailv31.resource)
                     .property(Emailv31.MESSAGES, new JSONArray()
                             .put(new JSONObject()
                                     .put(Emailv31.Message.FROM, new JSONObject()
-                                            .put("Email", "inversionesbautistadptoti@gmail.com")
+                                            .put("Email", senderEmail)
                                             .put("Name", "InverBautista SAS"))
                                     .put(Emailv31.Message.TO, new JSONArray()
                                             .put(new JSONObject()

@@ -9,6 +9,7 @@ import com.inverbautista.isc.raffle.Raffle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,25 +21,23 @@ import java.util.Map;
 @Service
 public class FileEntityServiceImp implements IFileEntityService {
 
-
+    @Value("${cloudinary.url}")
+    private String cloudinaryUrl;
     private IRaffleService raffleService;
-
-
+    
     private FileEntityRepository fileEntityRepository;
-
-
 
     private Cloudinary cloudinary;
 
     public FileEntityServiceImp(IRaffleService raffleService, FileEntityRepository fileEntityRepository) {
         this.raffleService = raffleService;
         this.fileEntityRepository = fileEntityRepository;
-        this.cloudinary = new Cloudinary("cloudinary://315447345662521:R9zSNkwDNl-q4h7FFuChqjN7Ruw@dbdvxyjbd");
-        this.cloudinary.config.secure = true;
     }
 
     @Override
     public List<FileEntity> uploadFiles(Long raffleId, List<MultipartFile> multipartFiles) throws IOException, BusinessLogicException {
+        this.cloudinary = new Cloudinary(cloudinaryUrl);
+        this.cloudinary.config.secure = true;
 
         List<FileEntity> fileList = new ArrayList<FileEntity>();
 
