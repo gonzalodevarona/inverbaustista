@@ -3,8 +3,6 @@ import theme from './utils/theme'
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Box, Typography, Button } from "@mui/material";
-import { getLocalData } from './utils/CommonFunctions';
-import Constants from './utils/Constants';
 import ProtectedRoute from './utils/ProtectedRoute';
 import PersonalInfo from './views/PaymentForm/PersonalInfo';
 import Checkout from './views/PaymentForm/Checkout';
@@ -12,9 +10,6 @@ import Result from './views/Payment/Result';
 import Raffles from './views/Raffles';
 import SingleRaffle from './views/SingleRaffle';
 import Landing from './views/Landing';
-import Header from './layout/Header';
-import SideMenu from './layout/SideMenu';
-import Footer from './layout/Footer';
 import Dashboard from './views/ISC/Dashboard';
 import ManageRaffle from './views/ISC/ManageRaffle';
 import ManageTicket from './views/ISC/ManageTicket';
