@@ -59,20 +59,16 @@ function Landing() {
                     variant='h1'>
                     Más de 30 años entregandole premios a los colombianos
                 </Typography>
-                <Carousel autoPlay navButtonsAlwaysVisible>
+                <Carousel autoPlay swipe  navButtonsAlwaysVisible>
                     {pictures.map(( image ) => (
-                        <CarouselSlide key={image}>
-                            <Card>
-                                <CardMedia
-                                    image={image}
-                                    style={{
-                                        height: 0,
-                                        paddingTop: '56.25%', // 16:9,
-                                        marginTop: '30'
-                                    }}
-                                />
-                            </Card>
-                        </CarouselSlide>
+                        <Box
+                        disabled
+                        key={image}
+                        component='img'
+                        height={isMediumSize?'auto':'70vh'}
+                        width={isMediumSize?'100%':'auto'}
+                        src={image}
+                               />
                     ))}
                 </Carousel>
                
