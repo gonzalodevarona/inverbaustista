@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { Typography, Card, CardMedia, Box, Button, Stack, useMediaQuery, useTheme } from '@mui/material'
 import Constants from '../../utils/Constants';
 import Carousel from 'react-material-ui-carousel';
@@ -23,7 +23,7 @@ function Landing() {
     const navigate = useNavigate();
 
     const handleRedirectClick = (route) => {
-        navigate('/'+route)
+        navigate('/' + route)
     };
 
     const pictures = [
@@ -42,46 +42,46 @@ function Landing() {
         image13
     ]
     const theme = useTheme();
-    const isMediumSize =  useMediaQuery(theme.breakpoints.down("md"));
+    const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
-    useEffect(() => {
-      console.log(isMediumSize)
-    }, [isMediumSize])
-    
 
     return (
         <Box mt="12em">
 
 
             <Stack >
-            <Typography sx={{ backgroundColor: Constants.secondaryMain, py: 3 }}
+                <Typography sx={{ backgroundColor: Constants.secondaryMain, py: 3 }}
                     color='white'
                     variant='h1'>
                     Más de 30 años entregandole premios a los colombianos
                 </Typography>
-                <Carousel autoPlay swipe  navButtonsAlwaysVisible>
-                    {pictures.map(( image ) => (
+                <Carousel
+                    autoPlay
+                    swipe
+                    navButtonsAlwaysVisible
+                >
+                    {pictures.map((image) => (
                         <Box
-                        disabled
-                        key={image}
-                        component='img'
-                        height={isMediumSize?'auto':'70vh'}
-                        width={isMediumSize?'100%':'auto'}
-                        src={image}
-                               />
+                            disabled
+                            key={image}
+                            component='img'
+                            height={isMediumSize ? 'auto' : '70vh'}
+                            width={isMediumSize ? '100%' : 'auto'}
+                            src={image}
+                        />
                     ))}
                 </Carousel>
-               
+
                 <Typography textAlign='left'
                     variant='p'>
                     Inverbautista es una empresa caleña con un respaldo de más de 30 años de experiencia, comprometida con el desarrollo de nuestra región a través de generacion de nuevas fuentes de empleo o sustitutos de ingreso para las familias vallecaucanas y mejoramiento de la calidad de cada una de ellas.
                 </Typography>
 
-                {isMediumSize &&  <Button onClick={()=> handleRedirectClick('raffles')} variant="contained" >
-                            <Typography sx={{ fontSize: '2rem' }} variant='h2'>Compra ya tu ticket</Typography>
-                        </Button>}
-                
-                
+                {isMediumSize && <Button onClick={() => handleRedirectClick('raffles')} variant="contained" >
+                    <Typography sx={{ fontSize: '2rem' }} variant='h2'>Compra ya tu ticket</Typography>
+                </Button>}
+
+
             </Stack>
 
         </Box>

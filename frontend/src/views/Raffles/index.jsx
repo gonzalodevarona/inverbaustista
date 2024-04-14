@@ -34,39 +34,31 @@ function Raffles() {
         <Stack sx={CONSTANTS.styleStackContainer} >
             <Typography variant="h1">Eventos vigentes</Typography>
 
-            {/* <Box sx={[CONSTANTS.sxResponsiveFlex, { gap: { xs: '5em', md: '8em' }, my: '6em' }]}> */}
             <Grid
-                direction={{ xs: 'column', md: 'row' }}
+                direction={{ xs: 'column', sm: 'row' }}
                 container
-                sx={{m:0, p:0}}
-                spacing={2}
+                spacing={{ xs: 0, sm: 5 }} 
                 alignItems="center"
-                wrap={{ xs: 'wrap', md: 'nowrap' }}
                 justify="center"
-                style={{ minHeight: '100vh' }}
             >
 
                 {loading ?
-                    [1, 2, 3].map((item) => (
-                        <Grid sx={{m:0, p:0}} key={item} item xs={12} m={4}>
+                    [1, 2, 3].map(item => (
+                        <Grid key={item} item xs={12} sm={6} md={3}>
                             <SkeletonCard />
                         </Grid>
-
-                    )) : <></>}
-                {(!loading) && raffles.length > 0 ?
-                        raffles.map((raffle) => (
-                            <Grid  sx={{m:0, p:0}} key={raffle.id} item xs={12} m={4}>
+                    ))
+                    : raffles.length === 0 ?
+                        <Typography variant="subtitle-1" sx={{ fontSize: '2rem' }}> No hay eventos vigentes </Typography>
+                        : raffles.map(raffle => (
+                            <Grid  key={raffle.id} item xs={12} md={4}>
                                 <RaffleCard raffle={raffle} />
                             </Grid>
                         ))
-                        : <Typography
-                            variant="subtitle-1"
-                            sx={{ fontSize: '2rem' }}> No hay eventos vigentes
-                        </Typography>
                 }
 
+
             </Grid>
-            {/* </Box> */}
         </Stack>
     )
 }

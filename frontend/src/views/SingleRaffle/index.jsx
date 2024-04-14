@@ -57,7 +57,7 @@ function SingleRaffle() {
       setDisabled(true);
       handleRedirectClick(`info/${id}/${quantity}`)
     } else {
-      ToastAlert('top-right', 4000).fire({
+      ToastAlert('bottom-right', 4000).fire({
         icon: 'error',
         title: 'Error: no hay disponibles la cantidad de tickets que deseas comprar, intenta de nuevo con menos'
       })

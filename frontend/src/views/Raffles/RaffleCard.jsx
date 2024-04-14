@@ -1,11 +1,11 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Button, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { handleNavigate } from '../../utils/CommonFunctions';
+import { parseDateToString } from '../../utils/CommonFunctions';
 import TicketsDefault from '../../assets/images/tickets.png';
 
 export default function RaffleCard({ raffle }) {
@@ -16,12 +16,12 @@ export default function RaffleCard({ raffle }) {
     };
 
     return (
-        raffle && <Card sx={{ minWidth: '35em', maxWidth: '45em', maxHeight:"70em"}}>
+        raffle.name && <Card sx={{ width: '35em', height: "59em" }}>
             <CardActionArea onClick={handleClick}>
                 <CardMedia
                     component="img"
-                    sx={{ minWidth: '35em', maxWidth: '45em', maxHeight:"40em"}}
-                    src={raffle.images.length>0? raffle.images[0].url : TicketsDefault}
+                    sx={{ width: '35em', height: "40em" }}
+                    src={raffle.images.length > 0 ? raffle.images[0].url : TicketsDefault}
                     alt="Imagen promocional evento"
                 />
                 <CardContent sx={{ textAlign: 'start' }}>
@@ -29,9 +29,14 @@ export default function RaffleCard({ raffle }) {
                         <Typography variant="h2" sx={{ fontSize: '2.4rem' }} >
                             {raffle.name}
                         </Typography>
-                        <Typography variant="subtitle1" color="text.primary">
-                            Tickets desde ${new Intl.NumberFormat('es-CO').format(raffle.pricePerTicket)}
-                        </Typography>
+                        <Stack spacing={0}>
+                            <Typography sx={{ m: 0 }} variant="subtitle1" color="text.primary">
+                                Tickets desde ${new Intl.NumberFormat('es-CO').format(raffle.pricePerTicket)}
+                            </Typography>
+                            <Typography variant="p" sx={{ fontSize: 14, m: 0 }} color="text.primary">
+                                Juega el: {parseDateToString(raffle.drawDate, false)}
+                            </Typography>
+                        </Stack>
                         <Button sx={{ width: '100%' }} variant="contained">
                             Compra ya
                         </Button>
