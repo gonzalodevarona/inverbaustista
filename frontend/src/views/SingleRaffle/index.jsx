@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Stack, Typography, } from "@mui/material";
+import { Stack, Box, Typography, } from "@mui/material";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useNavigate } from 'react-router-dom';
 import CONSTANTS from "../../utils/Constants";
 import Carousel from "../../components/Carousel";
+import DefaultPicture from "../../assets/images/tickets.png";
 import ToastAlert from "../../components/Alerts/ToastAlert"
 import RaffleService from "../../services/RaffleService";
 import { calculateFinalPrice } from "../../utils/CommonFunctions";
@@ -70,7 +71,12 @@ function SingleRaffle() {
 
 
       <Stack>
-        {raffle.images && <Carousel images={raffle.images.map(item => item.url)} title={raffle.name} />}
+        {raffle?.images?.length > 0 ?
+          <Carousel
+            images={raffle.images.map(item => item.url)}
+            title={raffle.name}
+          />
+          : <Box component='img' src={DefaultPicture} />}
       </Stack>
       <Stack sx={{ border: 'solid 1px', borderColor: 'primary', borderRadius: '8px' }} >
 
