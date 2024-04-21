@@ -1,8 +1,8 @@
 import './App.css'
 import theme from './utils/theme'
 import { ThemeProvider } from '@mui/material/styles';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Box, Typography, Button } from "@mui/material";
+import { BrowserRouter as Router, Routes, Link, Route, Navigate } from 'react-router-dom';
+import { Stack, Typography, Button } from "@mui/material";
 import ProtectedRoute from './utils/ProtectedRoute';
 import PersonalInfo from './views/PaymentForm/PersonalInfo';
 import Checkout from './views/PaymentForm/Checkout';
@@ -16,7 +16,6 @@ import ManageTicket from './views/ISC/ManageTicket';
 import ManageClient from './views/ISC/ManageClient';
 import FormRaffle from './views/ISC/ManageRaffle/FormRaffle';
 import FormTickets from './views/ISC/ManageTicket/FormTickets';
-import { useNavigate } from 'react-router-dom';
 import IscLayout from './layout/IscLayout';
 import MainLayout from './layout/MainLayout';
 import Login from './views/ISC/Login';
@@ -33,7 +32,11 @@ function App() {
 
         <Routes>
           <Route element={<MainLayout />}>
-            <Route path="*" element={<Typography variant='p'>Error 404: No hay nada aqui!</Typography>} />
+            <Route path="*" element={
+              <Stack>
+                <Typography variant='p'>Error 404: No hay nada aqui!</Typography>
+                <Button variant='contained'component={Link} to="/">Regresar al inicio</Button>
+              </Stack>} />
             <Route
               path="/"
               element={

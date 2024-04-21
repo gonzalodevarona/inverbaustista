@@ -35,6 +35,9 @@ public class MercadoPagoServiceImp implements IMercadoPagoService{
 
     @Value("${mercadopago.accessToken}")
     private String accessToken;
+
+    @Value("${shop.url}")
+    private String shopUrl;
     private IPayerService payerService;
     private IItemService itemService;
     private IClientService clientService;
@@ -78,8 +81,8 @@ public class MercadoPagoServiceImp implements IMercadoPagoService{
                 // BackUrls
 
                 PreferenceBackUrlsRequest backUrls =  PreferenceBackUrlsRequest.builder()
-                                .success("http://localhost:5173/pay/result")
-                                .failure("http://localhost:5173/pay/result")
+                                .success(shopUrl+"/pay/result")
+                                .failure(shopUrl+"/pay/result")
                                 .build();
 
                 PreferencePayerRequest payer = payerService.setupPayer(mercadoPagoRequestDto.getPayerDto());
@@ -90,7 +93,7 @@ public class MercadoPagoServiceImp implements IMercadoPagoService{
                         .payer(payer)
                         .paymentMethods(paymentMethods)
                         .backUrls(backUrls)
-                        .notificationUrl("https://3ebe-2803-1800-1342-f5ad-e992-8df1-6cf-ab8a.ngrok-free.app/api/pay/notify")
+                        .notificationUrl(shopUrl+":8443/api/pay/notify")
                         .metadata(new HashMap<>() {{
                             put("email", payer.getEmail());
                             put("idNumber", payer.getIdentification().getNumber());
