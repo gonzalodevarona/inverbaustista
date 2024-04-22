@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import { useNavigate } from 'react-router-dom';
-import { Stack, Typography, Box, Grid } from "@mui/material";
+import { Stack, Typography, useMediaQuery, useTheme, Grid } from "@mui/material";
 import { getLocalData, parseDateToString } from '../../utils/CommonFunctions';
 import CONSTANTS from '../../utils/Constants';
 import PaymentService from "../../services/PaymentService";
@@ -9,6 +9,10 @@ import PaymentService from "../../services/PaymentService";
 
 
 function Checkout() {
+
+    const theme = useTheme();
+    const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
+
     const navigate = useNavigate();
 
     const handleRedirectClick = (route) => {
@@ -50,7 +54,7 @@ function Checkout() {
             setPreference(await PaymentService.generatePreference(paymentArgs));
         }
 
-        if (paymentData && Object.keys(paymentData).length > 0){
+        if (paymentData && Object.keys(paymentData).length > 0) {
             generatePreference();
         } else {
             handleRedirectClick('404')
@@ -59,83 +63,79 @@ function Checkout() {
 
     }, [])
 
-    useEffect(() => {
-        console.log(paymentData)
-        console.log(getLocalData(CONSTANTS.paymentDataKey))
-        console.log(preference)
-    }, [])
-
-
 
     return (
         paymentData &&
-        <Stack sx={{ mt: { xs: '15%' }, border: 'solid 1px', height: '100%', py: '3em', px: '2em', borderRadius: '8px', width: '80em' }} >
-            <Typography variant="h1" >
-                Resumen de tu compra
 
-            </Typography>
-            <Grid container sx={{ py: '2%' }} spacing={2}>
-                <Grid item xs={12} md={6}>
+        <Grid container width={isMediumSize?'auto':'100em'}sx={{ my: '2%', border: 'solid 1px', borderColor: 'primary', borderRadius: '8px'  }} spacing={2}>
+            <Grid item xs={12} >
+                <Typography variant="h1" >
+                    Resumen de tu compra
+
+                </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Typography variant="subtitle1" >
+                    Información del evento
+                </Typography>
+                <Stack spacing={1}>
                     <Typography variant="subtitle1" >
-                        Información del evento
+                        Nombre:
+                        <Typography display={'inline'} > {paymentData.raffleName} </Typography>
                     </Typography>
-                    <Stack spacing={1}>
-                        <Typography variant="subtitle1" >
-                            Nombre:
-                            <Typography display={'inline'} > {paymentData.raffleName} </Typography>
-                        </Typography>
 
-                        <Typography variant="subtitle1" >
-                            Fecha en que juega:
-                            <Typography display={'inline'} > {paymentData.raffleDrawDate} </Typography>
-                        </Typography>
-
-                        <Typography variant="subtitle1" >
-                            Número de tickets:
-                            <Typography display={'inline'} > {paymentData.ticketsQuantity} </Typography>
-                        </Typography>
-
-                        <Typography variant="subtitle1" >
-                            Total:
-                            <Typography display={'inline'} > $ {new Intl.NumberFormat('es-CO').format(paymentData.amount)} </Typography>
-                        </Typography>
-                    </Stack>
-                </Grid>
-                <Grid item xs={12} md={6}>
                     <Typography variant="subtitle1" >
-                        Información del comprador
+                        Fecha en que juega:
+                        <Typography display={'inline'} > {paymentData.raffleDrawDate} </Typography>
                     </Typography>
-                    <Stack spacing={1}>
-                        <Typography variant="subtitle1" >
-                            Nombre:
-                            <Typography display={'inline'} > {paymentData.name} {paymentData.lastName}</Typography>
-                        </Typography>
-                        <Typography variant="subtitle1" >
-                            Identificación:
-                            <Typography display={'inline'} > {paymentData.idType} {paymentData.idNumber}</Typography>
-                        </Typography>
-                        <Typography variant="subtitle1" >
-                            Correo electrónico:
-                            <Typography display={'inline'} > {paymentData.email}</Typography>
-                        </Typography>
-                        <Typography variant="subtitle1" >
-                            Número de contacto:
-                            <Typography display={'inline'} > {paymentData.contactNumber}</Typography>
-                        </Typography>
-                        <Typography variant="subtitle1" >
-                            Dirección:
-                            <Typography display={'inline'} > {paymentData.address}, {paymentData.city}, {paymentData.state} - {paymentData.country}</Typography>
-                        </Typography>
-                    </Stack>
-                </Grid>
+
+                    <Typography variant="subtitle1" >
+                        Número de tickets:
+                        <Typography display={'inline'} > {paymentData.ticketsQuantity} </Typography>
+                    </Typography>
+
+                    <Typography variant="subtitle1" >
+                        Total:
+                        <Typography display={'inline'} > $ {new Intl.NumberFormat('es-CO').format(paymentData.amount)} </Typography>
+                    </Typography>
+                </Stack>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Typography variant="subtitle1" >
+                    Información del comprador
+                </Typography>
+                <Stack spacing={1}>
+                    <Typography variant="subtitle1" >
+                        Nombre:
+                        <Typography display={'inline'} > {paymentData.name} {paymentData.lastName}</Typography>
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                        Identificación:
+                        <Typography display={'inline'} > {paymentData.idType} {paymentData.idNumber}</Typography>
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                        Correo electrónico:
+                        <Typography display={'inline'} > {paymentData.email}</Typography>
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                        Número de contacto:
+                        <Typography display={'inline'} > {paymentData.contactNumber}</Typography>
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                        Dirección:
+                        <Typography display={'inline'} > {paymentData.address}, {paymentData.city}, {paymentData.state} - {paymentData.country}</Typography>
+                    </Typography>
+                </Stack>
             </Grid>
 
-            {preference.id && <Wallet initialization={{ preferenceId: preference.id }} customization={{
+            <Grid item xs={12} >
+                {preference.id && <Wallet initialization={{ preferenceId: preference.id }} customization={{
 
-                visual: { horizontalPadding: '2000%' }
-            }} />}
+                    visual: { horizontalPadding: '200%' }
+                }} />}
+            </Grid>
 
-        </Stack>
+        </Grid>
     )
 }
 

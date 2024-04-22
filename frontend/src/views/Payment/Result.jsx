@@ -23,8 +23,10 @@ function Result() {
         const urlParams = new URLSearchParams(window.location.search);
 
         setPaymentId(urlParams.get("payment_id"));
-        setIsApprovedPayment(urlParams.get("status") === 'rejected' ? false : true);
+        setIsApprovedPayment((urlParams.get("status") === 'approved') ? true : false);
+
     }, [])
+
 
     const body16 = { fontSize: '16px' };
     return (

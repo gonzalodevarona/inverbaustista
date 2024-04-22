@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Stack, Box, Typography, } from "@mui/material";
+import { Stack, Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useNavigate } from 'react-router-dom';
 import CONSTANTS from "../../utils/Constants";
-import Carousel from "../../components/Carousel";
+import Carousel from 'react-material-ui-carousel';
+
 import DefaultPicture from "../../assets/images/tickets.png";
 import ToastAlert from "../../components/Alerts/ToastAlert"
 import RaffleService from "../../services/RaffleService";
@@ -16,6 +17,9 @@ import { parseDateToString } from "../../utils/CommonFunctions";
 function SingleRaffle() {
 
   dayjs.locale('es');
+
+  const theme = useTheme();
+  const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
 
@@ -70,12 +74,25 @@ function SingleRaffle() {
     <Stack spacing={{ xs: 5, md: 0 }} sx={[CONSTANTS.sxResponsiveFlex, CONSTANTS.styleStackContainer, { maxHeight: "100%" }]}>
 
 
-      <Stack>
+      <Stack width={isMediumSize ? 'auto' : '100em'}>
+        <Typography variant="h1">Evento {raffle.name}</Typography>
         {raffle?.images?.length > 0 ?
           <Carousel
-            images={raffle.images.map(item => item.url)}
-            title={raffle.name}
-          />
+            autoPlay
+            swipe
+            navButtonsAlwaysVisible
+          >
+            {raffle.images.map((image) => (
+              <Box
+                disabled
+                key={image}
+                component='img'
+                height={isMediumSize ? 'auto' : '70vh'}
+                width={isMediumSize ? '100%' : 'auto'}
+                src={image.url}
+              />
+            ))}
+          </Carousel>
           : <Box component='img' src={DefaultPicture} />}
       </Stack>
       <Stack sx={{ border: 'solid 1px', borderColor: 'primary', borderRadius: '8px' }} >
