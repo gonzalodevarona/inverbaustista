@@ -46,11 +46,11 @@ const getAvailableTicketsAndDelete = async (raffleId) => {
 
 }
 
-const getTicketsByRaffleIdAndStatus = async (raffleId, status) => {
+const getTicketsByRaffleIdAndStatus = async (raffleId, status, fileName) => {
     const res = await axios.get(`/ticket${Constants.adminPath}/raffleid/${raffleId}?status=${status}`)
         .catch((error) => console.log(error));
     
-    downloadExcel(`Vendidas_Evento#${raffleId}`, formatTicketsToExcel(res.data))
+    downloadExcel(`${fileName}_Evento#${raffleId}`, formatTicketsToExcel(res.data))
 }
 
 const deleteTickets = async (raffle, tickets) => {

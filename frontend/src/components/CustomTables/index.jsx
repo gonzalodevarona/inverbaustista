@@ -20,6 +20,7 @@ import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
 import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import { Box } from "@mui/material";
@@ -74,10 +75,15 @@ function CustomTable({ title, page, sx, columns, data, parentAction }) {
         onClick: (event, rowData) => handleRedirectClick('ticket/edit')
     }
 
-    const downloadSoldTicketsAction = {
+    const downloadAvailableTicketsAction = {
         icon: () => <GetAppIcon fontSize='large' />,
+        tooltip: 'Descargar tickets disponibles',
+        onClick: (event, rowData) => {TicketService.getTicketsByRaffleIdAndStatus(rowData.id, 'available', 'Disponibles '); parentAction()}
+    }
+    const downloadSoldTicketsAction = {
+        icon: () => <CreditScoreIcon fontSize='large' />,
         tooltip: 'Descargar tickets vendidos',
-        onClick: (event, rowData) => {TicketService.getTicketsByRaffleIdAndStatus(rowData.id, 'sold'); parentAction()}
+        onClick: (event, rowData) => {TicketService.getTicketsByRaffleIdAndStatus(rowData.id, 'sold', 'Vendidas'); parentAction()}
     }
 
     const downloadAndDeleteAvailableTicketsAction = {
@@ -131,6 +137,7 @@ function CustomTable({ title, page, sx, columns, data, parentAction }) {
                 break;
             case 'tickets':
                 actions.push(editTicketsAction);
+                actions.push(downloadAvailableTicketsAction);
                 actions.push(downloadSoldTicketsAction);
                 actions.push(downloadAndDeleteAvailableTicketsAction);
                 break;

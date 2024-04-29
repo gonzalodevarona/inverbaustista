@@ -23,7 +23,8 @@ function Result() {
         const urlParams = new URLSearchParams(window.location.search);
 
         setPaymentId(urlParams.get("payment_id"));
-        setIsApprovedPayment((urlParams.get("status") === 'approved') ? true : false);
+        setIsApprovedPayment((urlParams.get("status") == undefined && 
+        urlParams.get("payment_id")) ? true : false);
 
     }, [])
 

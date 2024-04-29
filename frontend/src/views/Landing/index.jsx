@@ -69,9 +69,9 @@ function Landing() {
                     ))}
                 </Carousel>
 
-                <Typography textAlign='left'
-                    variant='p'>
-                    Inverbautista es una empresa caleña con un respaldo de más de 30 años de experiencia, comprometida con el desarrollo de nuestra región a través de generacion de nuevas fuentes de empleo o sustitutos de ingreso para las familias vallecaucanas y mejoramiento de la calidad de cada una de ellas.
+                <Typography textAlign='center' fontSize='1.7rem'
+                    variant='subtitle1'>
+                    InverBautista es una empresa caleña con un respaldo de más de 30 años de experiencia, comprometida con el desarrollo de nuestra región a través de generacion de nuevas fuentes de empleo o sustitutos de ingreso para las familias vallecaucanas y mejoramiento de la calidad de cada una de ellas.
                 </Typography>
 
                 {isMediumSize && <Button onClick={() => handleRedirectClick('raffles')} variant="contained" >

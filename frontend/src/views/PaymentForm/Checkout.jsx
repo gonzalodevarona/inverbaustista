@@ -67,9 +67,9 @@ function Checkout() {
     return (
         paymentData &&
 
-        <Grid container width={isMediumSize?'auto':'100em'}sx={{ my: '2%', border: 'solid 1px', borderColor: 'primary', borderRadius: '8px'  }} spacing={2}>
+        <Grid container width={isMediumSize?'auto':'100em'}sx={{ my: '12em', border: 'solid 1px', borderColor: 'primary', borderRadius: '8px'  }} spacing={2}>
             <Grid item xs={12} >
-                <Typography variant="h1" >
+                <Typography variant="h1" sx={{ my:{xs:0, md:'1em'}}}>
                     Resumen de tu compra
 
                 </Typography>

@@ -20,7 +20,7 @@ export default function RaffleCard({ raffle }) {
             <CardActionArea onClick={handleClick}>
                 <CardMedia
                     component="img"
-                    sx={{ width: '35em', height: "40em" }}
+                    sx={{ width: '35em', height: "35em" }}
                     src={raffle.images.length > 0 ? raffle.images[0].url : TicketsDefault}
                     alt="Imagen promocional evento"
                 />
