@@ -74,7 +74,7 @@ function Landing() {
                     InverBautista es una empresa caleña con un respaldo de más de 30 años de experiencia, comprometida con el desarrollo de nuestra región a través de generacion de nuevas fuentes de empleo o sustitutos de ingreso para las familias vallecaucanas y mejoramiento de la calidad de cada una de ellas.
                 </Typography>
 
-                {isMediumSize && <Button onClick={() => handleRedirectClick('raffles')} variant="contained" >
+                {isMediumSize && <Button  onClick={() => handleRedirectClick('raffles')} variant="contained" >
                     <Typography sx={{ fontSize: '2rem' }} variant='h2'>Compra ya tu ticket</Typography>
                 </Button>}
 
