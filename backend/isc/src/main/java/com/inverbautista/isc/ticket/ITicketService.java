@@ -13,6 +13,7 @@ public interface ITicketService {
     List<TicketDto> getTicketsByRaffleId(Long raffleId) throws BusinessLogicException;
 
     List<TicketDto> getTicketsFilteredByRaffleIdAndTicketStatus(Long raffleId, String status) throws BusinessLogicException;
+    List<TicketSoldDto> getSoldTicketsByRaffleId(Long raffleId) throws BusinessLogicException;
 
     List<TicketDto> getAvailableTicketsAndDelete(Long raffleId) throws BusinessLogicException;
 

@@ -83,7 +83,7 @@ function CustomTable({ title, page, sx, columns, data, parentAction }) {
     const downloadSoldTicketsAction = {
         icon: () => <CreditScoreIcon fontSize='large' />,
         tooltip: 'Descargar tickets vendidos',
-        onClick: (event, rowData) => {TicketService.getTicketsByRaffleIdAndStatus(rowData.id, 'sold', 'Vendidas'); parentAction()}
+        onClick: (event, rowData) => {TicketService.getSoldTicketsByRaffleId(rowData.id); parentAction()}
     }
 
     const downloadAndDeleteAvailableTicketsAction = {
@@ -133,7 +133,6 @@ function CustomTable({ title, page, sx, columns, data, parentAction }) {
             case 'raffles':
                 actions.push(editTicketsAction);
                 actions.push(editRaffleAction);
-                actions.push(deleteRaffleAction);
                 break;
             case 'tickets':
                 actions.push(editTicketsAction);

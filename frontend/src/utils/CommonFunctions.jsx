@@ -124,6 +124,17 @@ export function formatTicketsToExcel(tickets) {
     }));
 }
 
+export function formatSoldTicketsToExcel(tickets) {
+    return tickets.map(item => ({
+        '#': item.ticketDto.number + item.ticketDto.city[0],
+        ZONA: item.city === 'CALI' ? item.city : 'NVALLE',
+        COMPRADOR: `${item.clientDto.name} ${item.clientDto.lastName}`,
+        TELEFONO: item.clientDto.phoneNumber,
+        DOCUMENTO: `${item.clientDto.idType} ${item.clientDto.idNumber}`,
+        EMAIL: item.clientDto.email,
+    }));
+}
+
 export function translateSingleRaffleStatus(status) {
     status = status.toUpperCase();
 

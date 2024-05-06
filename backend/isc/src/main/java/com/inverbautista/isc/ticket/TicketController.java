@@ -36,6 +36,11 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTicketsFilteredByRaffleIdAndTicketStatus(raffleId, status));
     }
 
+    @GetMapping("${adminPrefix}/raffleid/{raffleId}/sold")
+    public ResponseEntity<List<TicketSoldDto>> getSoldTicketsByRaffleId(@PathVariable("raffleId") Long raffleId) throws BusinessLogicException {
+        return ResponseEntity.ok(ticketService.getSoldTicketsByRaffleId(raffleId));
+    }
+
     @DeleteMapping("${adminPrefix}/available/{raffleId}")
     public ResponseEntity<List<TicketDto>> getAvailableTicketsAndDelete(@PathVariable("raffleId") Long raffleId) throws BusinessLogicException {
         return ResponseEntity.ok(ticketService.getAvailableTicketsAndDelete(raffleId));

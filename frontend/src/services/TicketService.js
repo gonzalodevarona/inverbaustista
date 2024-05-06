@@ -1,5 +1,5 @@
 import axios from '../config/AxiosBackend';
-import { downloadExcel, formatTicketsToExcel } from '../utils/CommonFunctions';
+import { downloadExcel, formatTicketsToExcel, formatSoldTicketsToExcel } from '../utils/CommonFunctions';
 import Constants from '../utils/Constants';
 
 const countTicketsFiltered = async (raffleId, ticketStatus) => {
@@ -49,8 +49,13 @@ const getAvailableTicketsAndDelete = async (raffleId) => {
 const getTicketsByRaffleIdAndStatus = async (raffleId, status, fileName) => {
     const res = await axios.get(`/ticket${Constants.adminPath}/raffleid/${raffleId}?status=${status}`)
         .catch((error) => console.log(error));
-    
     downloadExcel(`${fileName}_Evento#${raffleId}`, formatTicketsToExcel(res.data))
+}
+
+const getSoldTicketsByRaffleId = async (raffleId) => {
+    const res = await axios.get(`/ticket${Constants.adminPath}/raffleid/${raffleId}/sold`)
+        .catch((error) => console.log(error));
+    downloadExcel(`Vendidas_Evento#${raffleId}`, formatSoldTicketsToExcel(res.data))
 }
 
 const deleteTickets = async (raffle, tickets) => {
@@ -66,6 +71,7 @@ const deleteTickets = async (raffle, tickets) => {
 const TicketService = {
     getAvailableTicketsAndDelete,
     getTicketsByRaffleIdAndStatus,
+    getSoldTicketsByRaffleId,
     countTicketsFiltered,
     countAllTickets,
     checkTicketAvailability,

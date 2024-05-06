@@ -1,5 +1,7 @@
 package com.inverbautista.isc.ticket;
 
+import com.inverbautista.isc.client.ClientDto;
+import com.inverbautista.isc.client.ClientMapper;
 import com.inverbautista.isc.exception.BusinessLogicException;
 import com.inverbautista.isc.exception.PurchaseException;
 import com.inverbautista.isc.raffle.IRaffleService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class TicketServiceImp implements ITicketService {
 
     static TicketMapper ticketMapper = Mappers.getMapper(TicketMapper.class);
+    static ClientMapper clientMapper = Mappers.getMapper(ClientMapper.class);
 
 
     private TicketRepository ticketRepository;
@@ -49,6 +52,23 @@ public class TicketServiceImp implements ITicketService {
     public List<TicketDto> getTicketsFilteredByRaffleIdAndTicketStatus(Long raffleId, String status) throws BusinessLogicException {
         List<Ticket> tickets = ticketRepository.findByRaffleIdAndStatus(raffleId, TicketStatus.castEnum(status));
         return convertTicketsToDto(tickets);
+    }
+
+    @Override
+    public List<TicketSoldDto> getSoldTicketsByRaffleId(Long raffleId) throws BusinessLogicException {
+        List<Ticket> tickets = ticketRepository.findByRaffleIdAndStatus(raffleId, TicketStatus.SOLD);
+        List<TicketSoldDto> ticketSoldDtos = new ArrayList<TicketSoldDto>();
+        for (Ticket ticket: tickets) {
+
+            if(ticket.getSale() != null && ticket.getSale().getClient() != null){
+                TicketDto ticketDto = convertTicketToDto(ticket);
+                ClientDto clientDto =  clientMapper.fromClient(ticket.getSale().getClient());
+                TicketSoldDto soldTicket = new TicketSoldDto(ticketDto, clientDto);
+                ticketSoldDtos.add(soldTicket);
+            }
+        }
+
+        return ticketSoldDtos;
     }
 
     @Override

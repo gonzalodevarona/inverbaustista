@@ -1,14 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import React from 'react'
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { TextField, Typography, Box, Stack, InputAdornment, InputLabel, Input, FormHelperText, Button } from "@mui/material";
+import { TextField, Typography, Box, Stack, InputAdornment } from "@mui/material";
 import Constants from '../../../utils/Constants';
 import FileUploader from '../../../components/FileUploader';
 import FormDateTimePicker from '../../../components/FormDateTimePicker';
@@ -74,7 +71,6 @@ function FormRaffle({ mode }) {
 
       if (id) {
         const res = await RaffleService.getRaffleById(id)
-        console.log(res);
         valuesObj.name = res.name;
         valuesObj.description = res.description;
         valuesObj.pricePerTicket = res.pricePerTicket;
@@ -91,13 +87,6 @@ function FormRaffle({ mode }) {
 
   const chosenStatus = watch('status', false);
 
-  // useEffect(() => {
-
-  //   setValue('images', fileList)
-
-  // }, [fileList])
-
-
 
 
   const onSubmit = async (raffleData) => {
@@ -110,11 +99,6 @@ function FormRaffle({ mode }) {
     
     handleRedirectClick('raffle')
   };
-
-  useEffect(() => {
-    console.log(fileList);
-  }, [fileList])
-
 
   const conditionalShrink = mode == 'edit' ? { shrink: true } : null;
   const conditionalDisable = mode == 'edit' ? true : false;
