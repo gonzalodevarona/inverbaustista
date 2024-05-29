@@ -1,6 +1,7 @@
 import { Typography, Box, Button, Stack, useMediaQuery, useTheme } from '@mui/material'
 import Constants from '../../utils/Constants';
 import Carousel from 'react-material-ui-carousel';
+import image0 from '../../assets/images/foto0.jpeg';
 import image1 from '../../assets/images/foto1.jpeg';
 import image2 from '../../assets/images/foto2.jpeg';
 import image3 from '../../assets/images/foto3.jpeg';
@@ -24,6 +25,7 @@ function Landing() {
     };
 
     const pictures = [
+        image0,
         image1,
         image2,
         image3,

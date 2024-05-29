@@ -2,7 +2,7 @@ import { Box, Stack, TextField, InputAdornment, IconButton } from '@mui/material
 import LoadingButton from "@mui/lab/LoadingButton";
 import Constants from '../../../utils/Constants';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from '../../../config/AxiosBackend';
@@ -122,12 +122,7 @@ function Login() {
                         sx={{ width: '45em' }}
                         required
                         {...register("password", {
-                            required: "La contraseña es requerida", validate: {
-
-                                matchPattern: (v) =>
-                                    /^[\p{L}\p{M}]+$/u.test(v) ||
-                                    "La contraseña debe ser válida",
-                            },
+                            required: "La contraseña es requerida"
                         })}
                         error={!!errors.password}
                         helperText={errors.password?.message}
