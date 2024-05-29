@@ -15,6 +15,13 @@ export default function RaffleCard({ raffle }) {
         navigate(`/raffle/${raffle.id}`);
     };
 
+    const limitNameCharacters = (name) => {
+        if (name.length > 48) {
+            return name.substring(0, 48) + '...';
+        }
+        return name;
+    }
+
     return (
         raffle.name && <Card sx={{ width: '35em', height: "59em" }}>
             <CardActionArea onClick={handleClick}>
@@ -27,7 +34,7 @@ export default function RaffleCard({ raffle }) {
                 <CardContent sx={{ textAlign: 'start' }}>
                     <Stack spacing="1em">
                         <Typography variant="h2" sx={{ fontSize: '2.4rem' }} >
-                            {raffle.name}
+                            {limitNameCharacters(raffle.name)}
                         </Typography>
                         <Stack spacing={0}>
                             <Typography sx={{ m: 0 }} variant="subtitle1" color="text.primary">

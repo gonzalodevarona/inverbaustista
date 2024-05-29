@@ -36,12 +36,12 @@ export default function Footer() {
                             INVERBAUSTISTA
                         </Link>{" "} Cali, Valle del Cauca, Colombia
                     </Typography>
-                    
-                    <Box my={0} textAlign='center' href="https://www.instagram.com/inverbautista" color="white">
-                    Siguenos en redes sociales 
-                    <Link textAlign='center' color="inherit" href="https://www.instagram.com/inverbautista">
-                    Siguenos en redes sociales
-                    <Instagram />
+
+                    <Box my={0} textAlign='center' color="white">
+
+                        <Link textAlign='center' color="inherit" href="https://www.instagram.com/inverbautista">
+                            Siguenos en redes sociales
+                            <Instagram />
                         </Link>
                     </Box>
                 </Stack>
